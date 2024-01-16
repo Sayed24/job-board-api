@@ -1,5 +1,5 @@
 /*
-    1. send an AJAX request to https://remoteok.io/api
+    1. Send an AJAX request to https://remoteok.io/api
     2. Test that request to make sure it worked
     3. Use the data to create HTML
 */
@@ -8,12 +8,13 @@ var xhttp = new XMLHttpRequest();
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
        // Typical action to be performed when the document is ready:
-       let data = JSON.parse(xhttp.responseText);
-       let container = document.getElementById('container');
+       var data = JSON.parse(xhttp.responseText);
+       var container = document.getElementById('container');
+       console.log(data);
        data.slice(1).forEach(function(row, i) {
-        let rowDiv = document.createElement('div');
-        rowDiv.classList.add('row');
-        rowDiv.innerHTML = `
+           var rowDiv = document.createElement('div');
+           rowDiv.classList.add('row');
+           rowDiv.innerHTML = `
             <div class="left-section">
                 <h5 class="company">${row.company}</h5>
                 <h3 class="position">${row.position}</h3>
@@ -24,20 +25,18 @@ xhttp.onreadystatechange = function() {
                     return `<div class="tag">${tag}</div>`
                 }).join('')}
             </div>
-            <div class="mid-right-section>
+            <div class="mid-right-section">
                 ${new Date(row.date).toLocaleString()}
             </div>
-            <div class="right-section>
+            <div class="right-section">
                 <a href=${row.url}>
                     <button class="apply">Apply</button>
                 </a>
             </div>
-        `;
-        container.appendChild(rowDiv);
-
+           `;
+           container.appendChild(rowDiv);
        })
     }
 };
 xhttp.open("GET", "https://remoteok.com/api?tag=css", true);
 xhttp.send();
-
