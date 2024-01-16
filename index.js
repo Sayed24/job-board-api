@@ -12,14 +12,32 @@ xhttp.onreadystatechange = function() {
        let container = document.getElementById('container');
        data.slice(1).forEach(function(row, i) {
         let rowDiv = document.createElement('div');
+        rowDiv.classList.add('row');
         rowDiv.innerHTML = `
-            <h5 class="company">${row.company}</h5>
-            <h3 class="position">${row.position}</h3>
-            <p class="location">${row.location}</p>
+            <div class="left-section">
+                <h5 class="company">${row.company}</h5>
+                <h3 class="position">${row.position}</h3>
+                <p class="location">${row.location}</p>
+            </div>
+            <div class="mid-section">
+                ${row.tags.map(function(tag) {
+                    return `<div class="tag">${tag}</div>`
+                }).join('')}
+            </div>
+            <div class="mid-right-section>
+                ${new Date(row.date).toLocaleString()}
+            </div>
+            <div class="right-section>
+                <a href=${row.url}>
+                    <button class="apply">Apply</button>
+                </a>
+            </div>
         `;
         container.appendChild(rowDiv);
+
        })
     }
 };
 xhttp.open("GET", "https://remoteok.com/api?tag=css", true);
 xhttp.send();
+
